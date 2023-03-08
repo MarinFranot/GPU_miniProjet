@@ -65,7 +65,7 @@ int main()
 
     std::string name = "tailles.txt";
     std::ofstream fichier(name, std::ios::out | std::ios::trunc);
-    fichier << "taille-temps_cpu-temps_gpu-memoryThroughput(GB/s)-computationThroughput(GOPS/s)" << std::endl;
+    fichier << "taille|temps_cpu|temps_gpu|memoryThroughput(GB/s)|computationThroughput(GOPS/s)" << std::endl;
     fichier << "Ntest = " << Ntest << " | ";
     fichier << "Mode = " << MODE << " | ";
     fichier << "J = " << J << " | ";
@@ -233,10 +233,10 @@ int main()
             */
 
             // sauvegarde
-            fichier << arraySize << "-";
-            fichier << temps_cpu << "-";
-            fichier << temps_gpu << "-";
-            fichier << memoryThroughput << "-";
+            fichier << arraySize << "|";
+            fichier << temps_cpu << "|";
+            fichier << temps_gpu << "|";
+            fichier << memoryThroughput << "|";
             fichier << computationThroughput << std::endl;
         }
     }
