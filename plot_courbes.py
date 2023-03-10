@@ -67,15 +67,26 @@ def plot_cpu_vs_gpu(result):
     ax.semilogx(taille, cpu)
     ax.semilogx(taille, gpu)
     ax.grid()
-    plt.legend(['temps CPU', 'temps GPU'])
+    
     plt.show()
 
+def plot_gen(result, n1, n2):
+    x = result[n1]
+    y = result[n2]
+
+    fig, ax = plt.subplots()
+    ax.semilogx(x, y)
+    ax.grid()
+    plt.legend([n2])
+    plt.show()
+    
+    
 
 if __name__ == "__main__":
     result = read_file2("tailles.txt")
-    plot(result, 'taille', 'temps_cpu', title='temps du cpu en fonction de la taille', log=True)
-    plot(result, 'taille', 'temps_gpu', title='temps du gpu en fonction de la taille', log=True)
-    plot_cpu_vs_gpu(result)
+    #plot(result, 'taille', 'temps_cpu', title='temps du cpu en fonction de la taille', log=True)
+    #plot(result, 'taille', 'temps_gpu', title='temps du gpu en fonction de la taille', log=True)
+    #plot_cpu_vs_gpu(result)
 
     # result = read_file2("J.txt")
     # plot(result, 'J', 'temps_gpu', title='temps du gpu en fonction de J. arraysize = 10^6', condition={'taille':1e6})
@@ -84,3 +95,12 @@ if __name__ == "__main__":
     # result = read_file2("K.txt")
     # plot(result, 'K', 'temps_gpu', title='temps du gpu en fonction de K. arraysize = 10^6', condition={'taille':1e6})
     # plot(result, 'K', 'temps_gpu', title='temps du gpu en fonction de K. arraysize = 10^7', condition={'taille':1e7})
+
+
+    plot_gen(result, 'taille', 'computationThroughput(GOPS/s)\n')
+    plot_gen(result, 'taille', 'memoryThroughput(GB/s)')
+    
+
+    
+
+
