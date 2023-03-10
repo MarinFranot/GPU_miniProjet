@@ -23,9 +23,26 @@ def read_file2(filename):
     return result
 
 
-def plot(result, label1, label2, title=None, log=False):
-    x = result[label1]
-    y = result[label2]
+def plot(result, label1, label2, title=None, log=False, condition=None):
+    """ 
+    Affiche label1 en fonction de label2 d'un résultat: result, avec le titre: title, une possibilitée d'avoir une échelle log avec log=True
+    result est un dictionnaire de tableau (de même tailles)
+    on peut aussi mettre une contition sous la forme: condition = {'label3': 1e6}
+    """
+    if condition is None:
+        x = result[label1]
+        y = result[label2]
+    else:
+        x , y = [], []
+        for i in range(len(result[label1])):
+            add = True
+            for key, value in condition.items():
+                if result[key][i] != value:
+                    add = False
+            if add:
+                x.append(result[label1][i])
+                y.append(result[label2][i])
+
 
     if not log:
         plt.plot(x, y)
@@ -56,6 +73,14 @@ def plot_cpu_vs_gpu(result):
 
 if __name__ == "__main__":
     result = read_file2("tailles.txt")
-    plot(result, 'taille', 'temps_cpu', 'temps du cpu en fonction de la taille', log=True)
-    plot(result, 'taille', 'temps_gpu', 'temps du gpu en fonction de la taille', log=True)
+    plot(result, 'taille', 'temps_cpu', title='temps du cpu en fonction de la taille', log=True)
+    plot(result, 'taille', 'temps_gpu', title='temps du gpu en fonction de la taille', log=True)
     plot_cpu_vs_gpu(result)
+
+    # result = read_file2("J.txt")
+    # plot(result, 'J', 'temps_gpu', title='temps du gpu en fonction de J. arraysize = 10^6', condition={'taille':1e6})
+    # plot(result, 'J', 'temps_gpu', title='temps du gpu en fonction de J. arraysize = 10^7', condition={'taille':1e7})
+
+    # result = read_file2("K.txt")
+    # plot(result, 'K', 'temps_gpu', title='temps du gpu en fonction de K. arraysize = 10^6', condition={'taille':1e6})
+    # plot(result, 'K', 'temps_gpu', title='temps du gpu en fonction de K. arraysize = 10^7', condition={'taille':1e7})
